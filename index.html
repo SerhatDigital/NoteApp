@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteApp - Your Smart Note-Taking Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(108, 99, 255, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 99, 132, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-icon {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 10px 30px rgba(108, 99, 255, 0.5));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #6C63FF, #8B84FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .platforms {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .platform-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .platform-badge:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .info-notice {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        /* Legal Sections */
+        .legal-section {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .legal-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .legal-section h3 {
+            font-size: 1.8rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .legal-section h4 {
+            font-size: 1.3rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .legal-section p {
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+        }
+
+        .legal-section ul {
+            margin: 15px 0 15px 30px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .legal-section li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .legal-section a {
+            color: #6C63FF;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .legal-section a:hover {
+            color: #8B84FF;
+            text-decoration: underline;
+        }
+
+        .last-updated {
+            text-align: center;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 60px 20px 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            display: block;
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .legal-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="app-icon">📝</div>
+            <h1>NoteApp</h1>
+            <p class="tagline">Your Intelligent Note-Taking Solution for Modern Life</p>
+            
+            <div class="platforms">
+                <div class="platform-badge">
+                    <span>📱</span> Android
+                </div>
+                <div class="platform-badge">
+                    <span>🍎</span> iOS
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number">48</div>
+                    <div class="stat-label">Languages</div>
+                </div>
+                <div class="stat-item">
+         About Section -->
+    <section class="features" style="background: rgba(0, 0, 0, 0.2); padding: 80px 20px;">
+        <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+            <h2 class="section-title">About NoteApp</h2>
+            <p style="font-size: 1.3rem; line-height: 1.8; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px;">
+                NoteApp is a comprehensive note-taking solution designed for modern users who demand both functionality and privacy. 
+                Built with cutting-edge technology, it combines powerful features with an intuitive interface to help you capture, 
+                organize, and access your thoughts seamlessly across all your devices.
+            </p>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: rgba(255, 255, 255, 0.8);">
+                Whether you're a student managing coursework, a professional organizing projects, or someone who loves journaling, 
+                NoteApp provides all the tools you need in one secure, privacy-focused application. With support for 48 languages 
+                and a rich set of productivity features, NoteApp adapts to your workflow—not the other way around.
+            </p>
+        </div>
+    </section>
+
+    <!-- Core Features Section -->
+    <section class="features">
+        <h2 class="section-title">Core Features</h2>
+        <p class="section-subtitle">Everything you need for effective note-taking and productivity</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">☁️</div>
+                <h3>Cloud Synchronization</h3>
+                <p>Seamlessly sync your notes with Google Drive. Access your data anywhere, anytime, with automatic backup and restore capabilities.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>48 Languages</h3>
+                <p>Full multilingual support with 48 languages including English, German, Spanish, French, Chinese, Japanese, Arabic, and many more.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📔</div>
+                <h3>Smart Notebooks</h3>
+                <p>Organize notes into unlimited notebooks with custom categories and folder structures for perfect organization.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Diary & Calendar</h3>
+                <p>Keep a personal diary with calendar view, automatic date tagging, and timeline features to track your daily thoughts and memories.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🖼️</div>
+                <h3>Rich Multimedia</h3>
+                <p>Enhance your notes with photos from camera or gallery, hand-drawn sketches, voice recordings, and interactive checklists.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Password Protection</h3>
+                <p>Secure your sensitive notes with password protection. Your data stays encrypted and private on your device.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🏷️</div>
+                <h3>Tags & Search</h3>
+                <p>Powerful full-text search with tag filtering. Organize with custom tags and find any note instantly.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Beautiful Themes</h3>
+                <p>Choose from light, dark, and custom color themes. Personalize backgrounds, fonts, and UI elements to match your style.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📤</div>
+                <h3>Export & Share</h3>
+                <p>Export notes as professional PDFs, share via any app, or backup your entire database. Your data, your control.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">✏️</div>
+                <h3>Rich Text Editor</h3>
+                <p>Format your notes with bold, italic, lists, and more. Create professional-looking documents with our powerful editor.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🗄️</div>
+                <h3>Archive & Trash</h3>
+                <p>Keep your workspace clean by archiving old notes. Trash protection prevents accidental deletion with easy restore.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Offline Mode</h3>
+                <p>Works perfectly without internet connection. All your notes are stored locally and sync automatically when online.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Section -->
+    <section class="features" style="background: rgba(0, 0, 0, 0.2);">
+        <h2 class="section-title">Cross-Platform Excellence</h2>
+        <p class="section-subtitle">Available on all your devices</p>
+        
+        <div style="max-width: 700px; margin: 0 auto;">
+            <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2); margin-bottom: 30px;">
+                <div style="font-size: 3rem; text-align: center; margin-bottom: 20px;">📱</div>
+                <h3 style="text-align: center; font-size: 1.8rem; margin-bottom: 15px;">Android</h3>
+                <p style="text-align: center; color: rgba(255, 255, 255, 0.8); font-size: 1.1rem;">
+                    Available now on Google Play Store. Supports Android 6.0 and above. Optimized for tablets and phones with adaptive layouts.
+                </p>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                <div style="font-size: 3rem; text-align: center; margin-bottom: 20px;">🍎</div>
+                <h3 style="text-align: center; font-size: 1.8rem; margin-bottom: 15px;">iOS (Coming Soon)</h3>
+                <p style="text-align: center; color: rgba(255, 255, 255, 0.8); font-size: 1.1rem;">
+                    Currently in development. iOS version will support iPhone and iPad with seamless iCloud integration. Stay tuned!
+                
+                <div class="feature-icon">🏷️</div>
+                <h3>Tags & Search</h3>
+                <p>Find your notes instantly with tags and powerful search functionality.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Customizable</h3>
+                <p>Choose from various themes and customize the app to your needs.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📤</div>
+                <h3>Export & Share</h3>
+                <p>Export your notes as PDF or share them directly with others.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>NoteApp</h3>
+                <p>Modern note-taking app for Android and iOS</p>
+                <p>Version 1.0.0</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="imprint.html">Imprint</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <a href="mailto:contact@digitalstudiolab.com">contact@digitalstudiolab.com</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>Platforms</h3>
+                <p>📱 Android (available)</p>
+                <p>🍎 iOS (in development)</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Serhat Gürel. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">This website is for informational purposes only about the NoteApp application.</p>
+        </div>
+    </footer>
+</body>
+</html>
